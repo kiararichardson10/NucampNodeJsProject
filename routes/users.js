@@ -6,17 +6,21 @@ const authenticate = require("../authenticate");
 const router = express.Router();
 
 /* GET users listing. */
-router.get("/", authenticate.verifyUser, authenticate.verifyAdmin, function (req, res, next) {
-  res.send("respond with a resource");
-});
+router.get(
+  "/",
+  authenticate.verifyUser,
+  authenticate.verifyAdmin,
+  function (req, res, next) {
+    res.send("respond with a resource");
+  }
+);
 
 router.get("/users", function (req, res, next) {
-  User.find()
-  .then((users)) => {
-    res.statusCode = 200; 
+  User.find().then({ users }, () => {
+    res.statusCode = 200;
     res.setHeader("Content-Type", "application/json");
-    res.json({users}); 
-  }
+    res.json({ users });
+  });
 });
 
 router.post("/signup", (req, res) => {
